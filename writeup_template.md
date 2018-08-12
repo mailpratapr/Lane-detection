@@ -342,12 +342,12 @@ yellow_clip = clip2.fl_image(process_image)
 
 The code seems to work well for the sample videos and test images.
 
-#Short Comings
+# Short Comings
     1. It may not work well if there is a curved road.
     2. It may not work if there is snow on the road.
     3. During fog and rain we may not be able to detect the lines from a foggy image
     
 
-#Possible Improvements
+# Possible Improvements
     1. Detect the lanes on curved road.
     2. Must be able to differentiate White and Yellow.
