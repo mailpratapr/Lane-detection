@@ -288,7 +288,6 @@ def process_image(image):
     return lines_edges
 ```
 
-    <matplotlib.image.AxesImage at 0x11724b550>
 
 ![png](test_images_output/Process image.png)
 
