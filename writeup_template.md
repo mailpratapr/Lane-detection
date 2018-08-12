@@ -21,8 +21,7 @@ import numpy as np
 import cv2
 %matplotlib inline
 ```
-# Color Filtering
-Read in an Image
+# Read an Image
 ```python
 #reading in an image
 image = mpimg.imread('test_images/solidWhiteRight.jpg')
@@ -33,9 +32,7 @@ plt.imshow(image)  # if you wanted to show a single color channel image called '
 plot_images(test_images)
 ```
 
-
-![png](output/output_4_0.png)
-
+![png](test_images_output/Readimage.png)
 
 # Helper Functions 
 ```python
@@ -169,20 +166,12 @@ def weighted_img(img, initial_img, α=0.8, β=1., γ=0.):
     return cv2.addWeighted(initial_img, α, img, β, γ)
 ```
 
-
-![png](output/output_6_0.png)
-
 # Test Images
 
 ```python
 import os
 os.listdir("test_images/")
 ```
-
-
-![png](output/output_8_0.png)
-
-
 # Read image and plot function
 
 ```python
@@ -207,20 +196,17 @@ test_images = [plt.imread(path) for path in glob.glob('test_images/*.jpg')]
 plot_images(test_images)
 ```
 
-
-![png](output/output_10_0.png)
-
+![png](test_images_output/testimages.png)
 
 # Build a Lane Finding Pipeline
 # Read image and convert to grayscale
-
 
 ```python
 gray_list=(list(map(grayscale, test_images)))
 plot_images(gray_list)
 ```
 
-![png](output/output_12_0.png)
+![png](test_images_output/grayscale.png)
 
 
 # Gaussian fliter
@@ -229,6 +215,7 @@ plot_images(gray_list)
 gaussian_blur_list=(list(map(lambda image:gaussian_blur(image,3), gray_list)))
 plot_images(gaussian_blur_list)
 ```
+![png](test_images_output/gaussian.png)
 # Canny filter
 To detect the edges
 ```python
@@ -236,7 +223,7 @@ edges_list=(list(map(lambda blur:canny(blur,50,150), gaussian_blur_list)))
 plot_images(edges_list)
 ```
 
-![png](output/output_14_0.png)
+![png](test_images_output/canny.png)
 # Region of interest
 ```python
 imshape = image.shape
@@ -244,6 +231,7 @@ vertices = np.array([[(120,imshape[0]),(475, 310), (480, 310), (imshape[1],imsha
 masked_image_list=(list(map(lambda edges:region_of_interest(edges,vertices), edges_list)))
 plot_images(masked_image_list)
 ```
+![png](test_images_output/regionof interest.png)
 
 # Hough Lines
 Hough Lines takes the image in xy space and convert them into ro,theta space. Which actually makes it simple to detect Lines as points in ro,theta space. By thresholding it, we can define the length of the lines. 
@@ -260,22 +248,21 @@ Parameters that can be tweaked in this transform:
 lines_list=(list(map(lambda masked_image:hough_lines(masked_image,2,3*np.pi/180,20,20,200), masked_image_list)))
 plot_images(lines_list)
 ```
-Now the lines are visible, But it is not extrapolated as we want. So we will have to process the lines to draw two lines one with a negative slope and other with Positive slope. By averaging the ones which have negative slope and the ones which has the positive slope. We should be able to have one unique line on each side. 
+![png](test_images_output/Houghlines.png)
+
 
 # Create a "color" binary image to combine with line image
 ```python
 color_edges_list=(list(map(lambda edges: np.dstack((edges, edges, edges)), edges_list)))
 plot_images(color_edges_list)
 ```
-
+![png](test_images_output/stackimages.png)
 # Draw the lines on the edge image
 ```python
 weighted_img_list=(list(map(lambda lines,image: weighted_img(lines,image), lines_list,test_images)))
 plot_images(weighted_img_list)
 ```
-
-![png](output/output_18_0.png)
-
+![png](test_images_output/weightedimage.png)
 
 # Process Image
 The Lines look good on Test Images. Lets write a single function which computes all the above in sequence.
@@ -301,7 +288,7 @@ def process_image(image):
 
     <matplotlib.image.AxesImage at 0x11724b550>
 
-![png](output/output_20_1.png)
+![png](test_images_output/Process image.png)
 
 
 # Test on Videos
