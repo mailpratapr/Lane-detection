@@ -4,22 +4,13 @@ Project requirements:
     2. Solid/Broken White/Yellow lane detection
    
 Approach:
-    1. The idea is to just filter out the Lanes which has a unique color(White & Yellow) & shape pattern(Line).
-    2. Splitting the problem 
-        1. Color Filtering
-            Tried to solve it by converting the color spaces(HSV) which actually gave better results than RGB. Because the color factor comes under the one variable of HSV(Hue)
-        2. Shape Filtering
-            Lines can easily be detected using Hough Line detection.
-        3. Region of Interest
-            There is an ROI that we are interested in which is the are we care about in the image. Trapezoidal ROI is what has been tried to avoid noises.
+    1. Read the images. 
+    2. Conver to grayscale format.
+    3. Apply Gaussian filter to remove noise.
+    4. Apply Canny filter to detect images. 
+    5. Create Region of Interest
+    6. Detect the Hough lines
             
-I started of just using the Hough Lines Example, from the Quizzes. Then I wasn't satisfied with the results having multiple unwanted lines. I came across this github repository where they have used color filtering, which actually makes the system more stable. I took the report format from the following repository which is intuitive.
-
-References Used for this Project:
-    1. https://github.com/naokishibuya/car-finding-lane-lines
-    2. https://github.com/udacity/CarND-LaneLines-P1/blob/master/P1.ipynb
-
-
 # Import Packages
 
 ```python
