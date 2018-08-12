@@ -199,6 +199,8 @@ plot_images(test_images)
 ![png](test_images_output/testimages.png)
 
 # Build a Lane Finding Pipeline
+The pipeline consisted of 5 steps. First, I converted the images to grayscale, then detect the edges using canny filter. Then decide the area of interest and the hough line in the are of interest. Then draw the line on the original image. After detecting the line extrapolate the lines. For getting a straight line cv2.fitLine is used which gives an approximate a straight line to the hough lines. Then the slope of line is found with the points on the line and extrapolated on both sides with and y value is obtained.
+
 # Read image and convert to grayscale
 
 ```python
@@ -339,3 +341,13 @@ yellow_clip = clip2.fl_image(process_image)
     Wall time: 43.4 s
 
 The code seems to work well for the sample videos and test images.
+
+#Short Comings
+    1. It may not work well if there is a curved road.
+    2. It may not work if there is snow on the road.
+    3. During fog and rain we may not be able to detect the lines from a foggy image
+    
+
+#Possible Improvements
+    1. Detect the lanes on curved road.
+    2. Must be able to differentiate White and Yellow.
